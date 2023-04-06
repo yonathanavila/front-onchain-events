@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
-import { Layout, Menu, Select, theme } from 'antd';
+import { Layout, Menu, Select, Button, theme } from 'antd';
 import logo from "public/images/OnchainEventsLogo.png";
 import { capitalize, chains, dafaultChainId, toHexString } from '../../utils/constants';
 import { useEffect, useState } from 'react';
@@ -18,9 +18,15 @@ export default function Navbar() {
 
     const { Option } = Select;
     const [activeChain, setActiveChain] = useState(dafaultChainId);
+    const [account, setAccount] = useState(undefined);
+    const [loading, setLoading] = useState(false);
 
     // Request new network on change
     const changeNetwork = async (chainId: any) => {
+
+    }
+
+    const handlerClick = async () => {
 
     }
 
@@ -54,7 +60,24 @@ export default function Navbar() {
             key: '/history',
             label: "View Events",
             onClick: () => router.push("/history"),
-        }, {
+        },
+        {
+            key: '/ownerlinks',
+            label:
+                <span>
+                    {
+                        !account &&
+                        <span>
+                            <Button style={{ width: 175, textAlign: 'left', backgroundColor: '#520339', color: '#D2BDCB' }} type="primary" onClick={handlerClick} loading={loading} disabled={loading}>Login with Metamask</Button>
+                        </span>
+                    }
+                    {account && <span onClick={() => router.push('/ownerlinks')}><span>Hello: {account}</span>&nbsp;</span>}
+
+                </span>,
+            showOnRedirectPage: true,
+
+        },
+        {
             key: 1,
             label: <span>
                 Network:&nbsp;
