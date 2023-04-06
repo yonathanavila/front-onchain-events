@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import { Layout, Menu, theme } from 'antd';
-import logo from "public/images/onchain.jpeg";
+import logo from "public/images/OnchainEventsLogo.png";
 
 const { Header } = Layout;
 

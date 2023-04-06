@@ -23,7 +23,7 @@ export default function RootLayout({
           <Navbar />
           <Content style={{ padding: '0 50px', color: '#fff' }}>
             <div className={styles.container}>
-              <Breadcrumb style={{ margin: '16px 0', color: "#fff" }}>
+              <Breadcrumb style={{ margin: '16px 0', color: "#9B1CA8" }}>
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>List</Breadcrumb.Item>
                 <Breadcrumb.Item>App</Breadcrumb.Item>
@@ -33,7 +33,7 @@ export default function RootLayout({
               </div>
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center', backgroundColor: '#001529', color: '#fff' }}>Ant Design ©2023 Created by Ant UED</Footer>
+          <Footer style={{ textAlign: 'center', backgroundColor: '#001529', color: '#fff' }}>Onchain Events ©2023 Mailthereum management events efficenly and secure</Footer>
         </Layout>
       </body>
     </html>
