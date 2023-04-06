@@ -134,3 +134,18 @@ li.ant-menu-overflow-item {
 .hero-image {
   margin-top: 15%;
 }
+
+.btn-gradient {
+  background: rgb(0, 21, 41);
+  background: linear-gradient(90deg, rgba(0, 21, 41, 1) 0%, rgba(119, 7, 79, 1) 100%);
+}
+
+.ant-select-selector {
+  background-color: #001529 !important;
+  color: #B516AB !important;
+}
+
+.ant-select-arrow {
+  color: #B516AB !important;
+
+}

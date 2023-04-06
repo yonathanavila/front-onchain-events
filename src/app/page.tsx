@@ -45,7 +45,7 @@ const App: React.FC = () => {
               Transparency and security
             </p>
             <br />
-            <Button type="primary" size="large" onClick={() => router.push("/create")} style={{ backgroundColor: '#9B1CA8' }}>
+            <Button type="primary" size="large" onClick={() => router.push("/create")} className='btn-gradient'>
               Create a new OnchainEvent <ArrowRightOutlined />
             </Button>
           </div>
