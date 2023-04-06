@@ -80,6 +80,7 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+
 }
 
 a {
@@ -100,4 +101,9 @@ ul {
 
 .main-logo {
   background-color: transparent !important;
+}
+
+.ant-layout {
+  background-color: #121236 !important;
+
 }
