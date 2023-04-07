@@ -1,8 +1,10 @@
 "use client";
+import { useState } from "react";
 import { Card, Col, Row, Steps, Input, DatePicker, Button } from "antd";
 import { LockOutlined } from '@ant-design/icons';
-import { useState } from "react";
 import { stepsList } from "../../../utils/constants.tsx";
+import * as dayjs from 'dayjs';
+import { validateEmail, validateEther } from "../../../utils/functions/validations.ts";
 
 
 export default function Create() {
@@ -12,14 +14,62 @@ export default function Create() {
     const [steps, setSteps] = useState();
     const [size, setSize] = useState<any>('large');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState();
+    const [error, setError] = useState<any>();
 
-    const updateData = (key: any, value: any) => {
-        if (key === 'redirectUrl') {
-            value = (value.indexOf('://') === -1) ? 'http://' + value : value;
-        }
-        setData({ ...data, [key]: value });
+    const [formInfo, setFormInfo] = useState<any>({
+        event_name: "",
+        event_date_start: "",
+        event_date_end: "",
+        event_location: "",
+        event_organizer: "",
+        event_organizer_email: "",
+        event_fee: "",
+        event_description: ""
+    });
+
+    const handleCallerInfoChange = (event: any) => {
+        setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
+
+        console.log(formInfo);
     };
+
+    function handlerDate(time: any): void {
+        console.log(time);
+        setFormInfo({ ...formInfo, event_date_start: time[0]['$d'].toString(), event_date_end: time[1]['$d'].toString() });
+    }
+
+    const handleSubmit = async () => {
+        try {
+
+            //------- validate information
+            if (!validateEmail(formInfo.event_organizer_email)) {
+                throw new Error("Invalid email");
+            };
+
+            if (!validateEther(formInfo.event_fee)) {
+                throw new Error("Invalid fee");
+            }
+
+            const response = await fetch('/api/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formInfo),
+            });
+            const data = await response.json();
+            if (data.error) {
+                setError(data.error);
+            } else {
+                setResult(data.result);
+            }
+        } catch (error: any) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     const getStep = () => {
         if (!!result) {
@@ -44,10 +94,11 @@ export default function Create() {
                         <h3 className="vertical-margin">Event name 🎉:</h3>
                         <Input
                             placeholder="This title will be displayed on the Onchain Events page."
-                            value={data.title}
+                            value={formInfo.event_name}
+                            name="event_name"
                             className="form-control"
                             prefix="Event Name:"
-                            onChange={(e) => updateData("title", e.target.value)}
+                            onChange={handleCallerInfoChange}
                         />
                         <br />
                         <br />
@@ -55,7 +106,7 @@ export default function Create() {
                             The start date and the end date of the event 📅
                         </p>
                         <h4 className="vertical-margin">Event Date:</h4>
-                        <RangePicker showTime />
+                        <RangePicker showTime onChange={(e) => handlerDate(e)} name="event_date" value={formInfo.event_date} />
                         <br />
                         <br />
                         <p>
@@ -63,10 +114,11 @@ export default function Create() {
                         </p>
                         <Input
                             placeholder="This location will be displayed on the Onchain Events page."
-                            value={data.title}
+                            value={formInfo.event_location}
+                            name="event_location"
                             className="form-control"
                             prefix="Event Location:"
-                            onChange={(e) => updateData("title", e.target.value)}
+                            onChange={handleCallerInfoChange}
                         />
                         <br />
                         <br />
@@ -75,10 +127,11 @@ export default function Create() {
                         </p>
                         <Input
                             placeholder="This name will be displayed on the Onchain Events page."
-                            value={data.title}
+                            value={formInfo.event_organizer}
+                            name="event_organizer"
                             className="form-control"
                             prefix="Event Organizer:"
-                            onChange={(e) => updateData("title", e.target.value)}
+                            onChange={handleCallerInfoChange}
                         />
                         <br />
                         <br />
@@ -87,10 +140,26 @@ export default function Create() {
                         </p>
                         <Input
                             placeholder="This email will be displayed on the Onchain Events page."
-                            value={data.title}
+                            value={formInfo.event_organizer_email}
+                            name="event_organizer_email"
+                            type="email"
                             className="form-control"
                             prefix="Organizer Email:"
-                            onChange={(e) => updateData("title", e.target.value)}
+                            onChange={handleCallerInfoChange}
+                        />
+                        <br />
+                        <br />
+                        <p>
+                            Set the price of the attendance 💰, help cover the costs of organizing the event and provide an incentive for attendees to show up. Charging a fee can also help to filter out attendees who may not be serious about attending, which can help to ensure that the event is well-attended and productive
+                        </p>
+                        <Input
+                            placeholder="This attendance fee will be displayed on the Onchain Events page."
+                            value={formInfo.event_fee}
+                            name="event_fee"
+                            className="form-control"
+                            type="number"
+                            prefix="Fee:"
+                            onChange={handleCallerInfoChange}
                         />
                         <br />
                         <br />
@@ -101,9 +170,10 @@ export default function Create() {
                             rows={4}
                             className="form-control"
                             placeholder="This description will be displayed on the Onchain Events page."
-                            value={data.title}
+                            value={formInfo.event_description}
+                            name="event_description"
                             prefix="Event Description:"
-                            onChange={(e) => updateData("title", e.target.value)}
+                            onChange={handleCallerInfoChange}
                         />
                         <br />
                         <br />
@@ -113,6 +183,12 @@ export default function Create() {
                             size={size}
                             disabled={loading}
                             loading={loading}
+                            onClick={() => {
+                                setLoading(true);
+                                setError(undefined);
+                                setResult(undefined);
+                                handleSubmit();
+                            }}
 
                         >
                             Generate Proof
