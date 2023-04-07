@@ -1,13 +1,14 @@
 "use client";
 import '@rainbow-me/rainbowkit/styles.css';
+import dynamic from 'next/dynamic';
 import { WagmiConfig } from 'wagmi';
-
 import { PropsWithChildren } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { wagmiClient } from '../../utils/functions/client';
 import { chainSelected } from '../../utils/functions/chain';
 import { chains } from '../../utils/functions/provider';
+import { Button, ConfigProvider } from 'antd';
 
 type P = PropsWithChildren;
 
@@ -52,20 +53,51 @@ const myCustomThem: any = {
     },
 };
 
-export default function Providers({ children }: P) {
+function Providers({ children }: P) {
     const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 0 : 0;
 
 
     return (
-        <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider
-                chains={chains}
-                initialChain={chainSelected[Number(chainId || 0)]}
-                theme={myCustomThem}
+        <div>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorPrimary: '#780650',
+                    },
+                    components: {
+                        Steps: {
+
+                            colorBgContainer: '#fff',
+                            colorBgBase: '#780650',
+                            colorBgLayout: '#780650',
+                            colorFill: '#780650',
+                            colorBgTextActive: '#fff',
+                            colorInfoText: '#fff',
+                            colorPrimaryTextActive: '#fff',
+                            colorPrimaryText: '#fff',
+
+                            colorTextLabel: '#fff',
+                            colorTextBase: '#fff',
+                            colorTextSecondary: '#fff',
+                            colorTextDescription: 'gray',
+                            colorText: '#fff'
+                        }
+                    }
+                }}
             >
-                {children}
-                <Analytics />
-            </RainbowKitProvider >
-        </WagmiConfig>
+                <WagmiConfig client={wagmiClient}>
+                    <RainbowKitProvider
+                        chains={chains}
+                        initialChain={chainSelected[Number(chainId || 0)]}
+                        theme={myCustomThem}
+                    >
+                        {children}
+                        <Analytics />
+                    </RainbowKitProvider >
+                </WagmiConfig>
+            </ConfigProvider>
+        </div>
     )
 }
+
+export default dynamic(() => Promise.resolve(Providers), { ssr: false });

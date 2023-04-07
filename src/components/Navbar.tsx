@@ -70,14 +70,16 @@ export default function Navbar() {
         },
     ]
     return (
-        <Header>
-            <Menu
-                theme="dark"
-                mode="horizontal"
-                selectedKeys={[path]}
-                items={false ? menuItems.filter(item => item.showOnRedirectPage) : menuItems}
+        <div>
+            <Header>
+                <Menu
+                    theme="dark"
+                    mode="horizontal"
+                    selectedKeys={[path]}
+                    items={false ? menuItems.filter(item => item.showOnRedirectPage) : menuItems}
 
-            ></Menu>
-        </Header>
+                ></Menu>
+            </Header>
+        </div>
     )
 }

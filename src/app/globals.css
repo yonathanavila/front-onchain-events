@@ -80,7 +80,7 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-
+  font-family: Arial, Helvetica, sans-serif !important;
 }
 
 a {
@@ -152,4 +152,47 @@ li.ant-menu-overflow-item {
 .connect-button {
   margin: inherit !important;
   margin-top: 10px !important;
+}
+
+.create-form {
+  background-color: #780650;
+  color: #fff;
+}
+
+.ant-card-head-title {
+  color: #fff;
+}
+
+.form-control {
+  background-color: #520339;
+  border: none;
+  color: #fff;
+}
+
+input {
+  background-color: #520339 !important;
+  border: none;
+  color: #fff !important;
+}
+
+input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #AA839E !important;
+  opacity: 1;
+  /* Firefox */
+}
+
+textarea::placeholder {
+  color: #AA839E !important;
+  opacity: 1;
+}
+
+.ant-picker-range {
+  background-color: #520339 !important;
+  color: #fff;
+  border: none;
+}
+
+.standard-margin {
+  color: #fff !important;
 }
