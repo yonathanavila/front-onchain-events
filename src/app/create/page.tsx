@@ -2,7 +2,7 @@
 import { Card, Col, Row, Steps, Input, DatePicker, Button } from "antd";
 import { LockOutlined } from '@ant-design/icons';
 import { useState } from "react";
-import { stepsList } from "../../../utils/constants";
+import { stepsList } from "../../../utils/constants.tsx";
 
 
 export default function Create() {
@@ -27,7 +27,7 @@ export default function Create() {
         } else if (isValidData) {
             return 1;
         }
-        return 3;
+        return 1;
     }
 
     const { RangePicker } = DatePicker;
@@ -134,6 +134,8 @@ export default function Create() {
                         className="standard-margin"
                         direction="vertical"
                         size="small"
+                        // if status is done change the icon check to 🎉
+
                         items={stepsList}
                         style={{
                             color: '#fff',
