@@ -62,9 +62,9 @@ export default function Navbar() {
         {
             key: '/ownerlinks',
             label:
-                <span>
+                <div className='connect-button'>
                     <ConnectButton label={'Connect wallet'} />
-                </span>,
+                </div>,
             showOnRedirectPage: true,
 
         },

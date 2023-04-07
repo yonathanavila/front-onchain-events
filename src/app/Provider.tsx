@@ -24,7 +24,7 @@ const myCustomThem: any = {
         actionButtonSecondaryBackground: '#000000',
         closeButton: '#000000',
         closeButtonBackground: '#ffffff',
-        connectButtonBackgroundError: '#000000',
+        connectButtonBackgroundError: '#520339',
         connectButtonInnerBackground: '#000000',
         connectButtonText: '#F6F2F5',
         connectButtonTextError: '#000000',
@@ -36,7 +36,7 @@ const myCustomThem: any = {
         generalBorderDim: '#000000',
         menuItemBackground: '#908e8e',
         modalBackdrop: '...',
-        modalBackground: '#780650',
+        modalBackground: '#120E1D',
         modalBorder: '#520339',
         modalText: '#ffffff',
         modalTextDim: '#ffffff',
@@ -53,14 +53,14 @@ const myCustomThem: any = {
 };
 
 export default function Providers({ children }: P) {
-    const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 0 : 1;
+    const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 0 : 0;
 
 
     return (
         <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider
                 chains={chains}
-                initialChain={chainSelected[Number(chainId || 1)]}
+                initialChain={chainSelected[Number(chainId || 0)]}
                 theme={myCustomThem}
             >
                 {children}

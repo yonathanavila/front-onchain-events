@@ -147,5 +147,9 @@ li.ant-menu-overflow-item {
 
 .ant-select-arrow {
   color: #B516AB !important;
+}
 
+.connect-button {
+  margin: inherit !important;
+  margin-top: 10px !important;
 }
