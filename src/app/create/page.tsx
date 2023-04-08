@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Card, Col, Row, Steps, Input, DatePicker, Button } from "antd";
+import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography } from "antd";
 import { LockOutlined } from '@ant-design/icons';
 import { stepsList } from "../../../utils/constants.tsx";
 import { validateEmail, validateEther } from "../../../utils/functions/validations.ts";
@@ -81,6 +81,7 @@ export default function Create() {
         }
     };
 
+    const { Title } = Typography;
 
     const getStep = () => {
         if (!!result) {
@@ -99,7 +100,10 @@ export default function Create() {
         <div>
             <Row>
                 <Col span={16}>
-                    <Card className="create-form boxed" bordered={false} title="Create a new Onchain Events">
+                    <Title>Onchain Events</Title>
+                    <br />
+                    <br />
+                    <Card className="create-form boxed" bordered={false}>
                         <a href="#" onClick={handlerFill} >Set demo data</a>
                         <br />
                         <br />

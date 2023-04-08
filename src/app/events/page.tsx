@@ -1,8 +1,6 @@
 "use client";
-import { Card, Table, Skeleton, Typography } from "antd";
+import { Card, Table, Skeleton, Typography, Space } from "antd";
 import { useState } from "react";
-import Image from "next/image";
-import logo from "public/images/OnchainBG.png";
 import SearchBar from "@/components/SearchBar";
 
 
@@ -14,14 +12,16 @@ export default function Events() {
             event: 'Mike',
             location: 'Barrio la cumbre',
             date: '10 Downing Street',
-            attenders: 10
+            attenders: 10,
+            attend: `<a> Go to</a>`
         },
         {
             key: '2',
             event: 'John',
             location: 42,
             date: '10 Downing Street',
-            attenders: 10
+            attenders: 10,
+            attend: `<a> Go to</a>`
         },
     ];
     const columns_ = [
@@ -45,6 +45,18 @@ export default function Events() {
             dataIndex: 'attenders',
             key: 'attenders',
         },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            render: (_: any, record: any) => (
+                <Space size="middle">
+                    <a>Attend</a>
+                    <a>Invite</a>
+                </Space>
+            ),
+        },
+
     ];
     const [source, setSource] = useState<any>(dataSource_);
     const [columns, setColumns] = useState<any>(columns_);
