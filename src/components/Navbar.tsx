@@ -55,9 +55,9 @@ export default function Navbar() {
             onClick: () => router.push("/create"),
         },
         {
-            key: '/history',
+            key: '/events',
             label: "View Events",
-            onClick: () => router.push("/history"),
+            onClick: () => router.push("/events"),
         },
         {
             key: '/ownerlinks',

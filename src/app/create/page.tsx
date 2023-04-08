@@ -3,12 +3,10 @@ import { useState } from "react";
 import { Card, Col, Row, Steps, Input, DatePicker, Button } from "antd";
 import { LockOutlined } from '@ant-design/icons';
 import { stepsList } from "../../../utils/constants.tsx";
-import * as dayjs from 'dayjs';
 import { validateEmail, validateEther } from "../../../utils/functions/validations.ts";
 
 
 export default function Create() {
-    const [data, setData] = useState<any>({ reward: 0, rewardChecked: false })
     const [result, setResult] = useState();
     const [isValidData, setIsValiData] = useState();
     const [steps, setSteps] = useState();
@@ -26,6 +24,19 @@ export default function Create() {
         event_fee: "",
         event_description: ""
     });
+
+    const handlerFill = () => {
+        setFormInfo({
+            event_name: "Onchain Events",
+            event_date_start: "2021-08-03T00:00:00.000Z",
+            event_date_end: "2021-08-03T00:00:00.000Z",
+            event_location: "Barrio la cumbre",
+            event_organizer: "Mike",
+            event_organizer_email: "evenst@onchainevents.com",
+            event_fee: "0.1",
+            event_description: "This is a demo event"
+        });
+    }
 
     const handleCallerInfoChange = (event: any) => {
         setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
@@ -89,11 +100,13 @@ export default function Create() {
             <Row>
                 <Col span={16}>
                     <Card className="create-form boxed" bordered={false} title="Create a new Onchain Events">
-                        <a href="#" >Set demo data</a>
+                        <a href="#" onClick={handlerFill} >Set demo data</a>
                         <br />
-                        <h3 className="vertical-margin">Event name 🎉:</h3>
+                        <br />
+                        <p>
+                            The name of the event
+                        </p>
                         <Input
-                            placeholder="This title will be displayed on the Onchain Events page."
                             value={formInfo.event_name}
                             name="event_name"
                             className="form-control"
@@ -105,7 +118,6 @@ export default function Create() {
                         <p>
                             The start date and the end date of the event 📅
                         </p>
-                        <h4 className="vertical-margin">Event Date:</h4>
                         <RangePicker showTime onChange={(e) => handlerDate(e)} name="event_date" value={formInfo.event_date} />
                         <br />
                         <br />
@@ -113,7 +125,6 @@ export default function Create() {
                             Be the most descriptive so your attendees don't get lost 🕵🏽‍♂️
                         </p>
                         <Input
-                            placeholder="This location will be displayed on the Onchain Events page."
                             value={formInfo.event_location}
                             name="event_location"
                             className="form-control"
@@ -126,7 +137,6 @@ export default function Create() {
                             The name of the event organizer 👤
                         </p>
                         <Input
-                            placeholder="This name will be displayed on the Onchain Events page."
                             value={formInfo.event_organizer}
                             name="event_organizer"
                             className="form-control"
@@ -139,7 +149,6 @@ export default function Create() {
                             The email of the organizer 📧
                         </p>
                         <Input
-                            placeholder="This email will be displayed on the Onchain Events page."
                             value={formInfo.event_organizer_email}
                             name="event_organizer_email"
                             type="email"
@@ -153,12 +162,11 @@ export default function Create() {
                             Set the price of the attendance 💰, help cover the costs of organizing the event and provide an incentive for attendees to show up. Charging a fee can also help to filter out attendees who may not be serious about attending, which can help to ensure that the event is well-attended and productive
                         </p>
                         <Input
-                            placeholder="This attendance fee will be displayed on the Onchain Events page."
                             value={formInfo.event_fee}
                             name="event_fee"
                             className="form-control"
                             type="number"
-                            prefix="Fee:"
+                            prefix="Entrance fee:"
                             onChange={handleCallerInfoChange}
                         />
                         <br />

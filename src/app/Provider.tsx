@@ -8,7 +8,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { wagmiClient } from '../../utils/functions/client';
 import { chainSelected } from '../../utils/functions/chain';
 import { chains } from '../../utils/functions/provider';
-import { Button, ConfigProvider } from 'antd';
+import { ConfigProvider } from 'antd';
 
 type P = PropsWithChildren;
 
@@ -63,6 +63,9 @@ function Providers({ children }: P) {
                 theme={{
                     token: {
                         colorPrimary: '#780650',
+                        colorText: '#fff',
+                        colorTextSecondary: '#fff',
+                        colorTextDescription: 'gray'
                     },
                     components: {
                         Steps: {
@@ -81,7 +84,39 @@ function Providers({ children }: P) {
                             colorTextSecondary: '#fff',
                             colorTextDescription: 'gray',
                             colorText: '#fff'
-                        }
+                        },
+                        Table: {
+                            colorBgContainer: '#780650',
+                            colorBgBase: '#780650',
+                            colorBgLayout: '#780650',
+                            colorFill: '#780650',
+                            colorBgTextActive: '#fff',
+                            colorInfoText: '#fff',
+                            colorPrimaryTextActive: '#fff',
+                            colorPrimaryText: '#fff',
+                            colorBorder: '#780650',
+                            colorTextLabel: '#fff',
+                            colorTextBase: '#fff',
+                            colorTextSecondary: '#fff',
+                            colorTextDescription: 'gray',
+                            colorText: '#fff'
+                        },
+                        Input: {
+                            colorBgContainer: '#780650',
+                            colorBgBase: '#780650',
+                            colorBgLayout: '#780650',
+                            colorFill: '#780650',
+                            colorBgTextActive: '#780650',
+                            colorInfoText: '#780650',
+                            colorPrimaryTextActive: '#780650',
+                            colorPrimaryText: '#780650',
+
+                            colorTextLabel: '#780650',
+                            colorTextBase: '#780650',
+                            colorTextSecondary: '#780650',
+                            colorTextDescription: 'gray',
+                            colorText: '#fff'
+                        },
                     }
                 }}
             >

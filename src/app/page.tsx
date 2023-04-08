@@ -46,7 +46,7 @@ const App: React.FC = () => {
             </p>
             <br />
             <Button type="primary" size="large" onClick={() => router.push("/create")} className='btn-gradient'>
-              Create a new OnchainEvent <ArrowRightOutlined />
+              Create a new Onchain Event <ArrowRightOutlined />
             </Button>
           </div>
         </Col>

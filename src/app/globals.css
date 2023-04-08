@@ -196,3 +196,28 @@ textarea::placeholder {
 .standard-margin {
   color: #fff !important;
 }
+
+.connect-button {
+  margin-left: 690px !important;
+}
+
+.img-bg {
+  background-image: url('/public/images/OnchainBG.png');
+}
+
+.bgWrap {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.bgText {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 3rem;
+  text-align: center;
+  padding-top: 40vh;
+  text-shadow: 1px 1px 1px #3c5c5e;
+}
