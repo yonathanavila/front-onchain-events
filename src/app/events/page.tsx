@@ -3,6 +3,7 @@ import { Card, Table, Skeleton, Typography } from "antd";
 import { useState } from "react";
 import Image from "next/image";
 import logo from "public/images/OnchainBG.png";
+import SearchBar from "@/components/SearchBar";
 
 
 export default function Events() {
@@ -57,7 +58,12 @@ export default function Events() {
             <Title>Onchain Events</Title>
             <br />
             <br />
-            {loading ? <Skeleton active /> : <Table dataSource={source} columns={columns} />}
+            {loading ? <Skeleton active /> : (
+                <>
+                    <SearchBar />
+                    <Table dataSource={source} columns={columns} />
+                </>
+            )}
         </>
     );
 }
