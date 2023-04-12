@@ -17,8 +17,6 @@ export default function DetailEvent() {
         () => [editableStrWithSuffix.slice(0, -12), editableStrWithSuffix.slice(-12)],
         [editableStrWithSuffix],
     );
-    const { RangePicker } = DatePicker;
-    const { TextArea } = Input;
     const { Paragraph } = Typography;
 
     const dataSource = [

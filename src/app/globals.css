@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Source Sans Pro';
-  src: url('/font/SourceSansPro-Regular.ttf');
+  src: url('/font/SourceSansPro-Regular.ttf') format('truetype');
 }
 
 :root {
@@ -78,6 +78,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: 'Source Sans Pro' !important;
 }
 
 body {
@@ -85,7 +86,7 @@ body {
   background: linear-gradient(to bottom,
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
-  font-family: 'Source Sans Pro';
+  font-family: 'Source Sans Pro' !important;
 }
 
 a {
@@ -162,6 +163,7 @@ li.ant-menu-overflow-item {
 .create-form {
   background-color: #780650;
   color: #fff;
+  font-family: 'Source Sans Pro' !important;
 }
 
 .ant-card-head-title {
@@ -200,6 +202,16 @@ textarea::placeholder {
 
 .standard-margin {
   color: #fff !important;
+  font-family: 'Source Sans Pro' !important;
+}
+
+.navbar-items {
+  font-family: 'Source Sans Pro' !important;
+}
+
+.list-events {
+  text-align: center;
+  font-family: 'Source Sans Pro' !important;
 }
 
 .connect-button {
@@ -207,7 +219,7 @@ textarea::placeholder {
 }
 
 .img-bg {
-  background-image: url('/public/img/OnchainBG.png');
+  font-family: 'Source Sans Pro' !important;
 }
 
 .bgWrap {
@@ -225,4 +237,12 @@ textarea::placeholder {
   text-align: center;
   padding-top: 40vh;
   text-shadow: 1px 1px 1px #3c5c5e;
+}
+
+th {
+  text-align: center !important;
+}
+
+td {
+  text-align: center !important;
 }

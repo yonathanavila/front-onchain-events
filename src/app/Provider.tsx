@@ -65,7 +65,11 @@ function Providers({ children }: P) {
                         colorPrimary: '#780650',
                         colorText: '#fff',
                         colorTextSecondary: '#fff',
-                        colorTextDescription: 'gray'
+                        colorTextDescription: 'gray',
+
+                        colorBorder: '#780650',
+                        colorBorderBg: '#780650',
+                        colorBorderSecondary: '#780650',
                     },
                     components: {
                         Steps: {
@@ -86,20 +90,23 @@ function Providers({ children }: P) {
                             colorText: '#fff'
                         },
                         Table: {
-                            colorBgContainer: '#780650',
                             colorBgBase: '#780650',
-                            colorBgLayout: '#780650',
-                            colorFill: '#780650',
-                            colorBgTextActive: '#fff',
-                            colorInfoText: '#fff',
-                            colorPrimaryTextActive: '#fff',
-                            colorPrimaryText: '#fff',
-                            colorBorder: '#780650',
-                            colorTextLabel: '#fff',
+                            colorBgContainer: '#780650',
                             colorTextBase: '#fff',
-                            colorTextSecondary: '#fff',
-                            colorTextDescription: 'gray',
-                            colorText: '#fff'
+                            colorTextLabel: '#fff',
+                            colorTextPlaceholder: '#fff',
+                            colorBgTextHover: '#780650',
+                            colorBgTextActive: '#780650',
+                            colorInfoBg: '#780650',
+                            colorBgContainerDisabled: '#780650',
+                            colorBgLayout: '#780650',
+                            colorInfoBgHover: '#780650',
+                            colorBgElevated: '#780650',
+                            colorIcon: '#fff',
+                            colorIconHover: '#fff',
+                            colorBorder: '#780650',
+                            colorBorderBg: '#780650',
+                            colorBorderSecondary: '#780650',
                         },
                         Input: {
                             colorBgContainer: '#780650',

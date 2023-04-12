@@ -48,10 +48,11 @@ export default function Events() {
             title: 'Action',
             dataIndex: 'action',
             key: 'action',
-            render: (_: any, record: any) => (
+            render: (_: any, { key }: any) => (
                 <Space size="middle">
-                    <Link href={'/events/1/invite'}>Attend</Link>
-                    <Link href={'/events/1/invite'}>Invite</Link>
+                    <Link href={`/events/${key}/attend`}>Attend</Link>
+                    <Link href={`/events/${key}/invite`}>Invite</Link>
+                    <Link href={`/events/${key}`}>View</Link>
                 </Space>
             ),
         },
@@ -72,7 +73,7 @@ export default function Events() {
             {loading ? <Skeleton active /> : (
                 <>
                     <SearchBar />
-                    <Table dataSource={source} columns={columns} />
+                    <Table dataSource={source} columns={columns} className="list-events" />
                 </>
             )}
         </>
