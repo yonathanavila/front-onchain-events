@@ -1,6 +1,6 @@
 "use client";
 import { Card, Table, Skeleton, Typography, Space } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
 import useSWR from 'swr';
@@ -9,28 +9,32 @@ import { useGetOnchainEvents } from "../../../hooks/useGetOnchainEvents";
 
 const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
 
+function renameData(events: any) {
+    const mappedEvents = events?.map((event: any) => {
+        return {
+            key: event.id, // assuming you want to use the "id" field as the unique key for the table rows
+            event: event.C1,
+            location: event.C4,
+            date: new Date(event.C2 * 1000).toLocaleString(), // convert Unix timestamp to a human-readable date string
+            attenders: 0
+        };
+    });
+    return mappedEvents;
+}
 
 export default function Events() {
 
     const { data: apiCall, error, isLoading } = useSWR(`${baseURI}/list`);
+    const [events, setEvents] = useState<any>([]);
 
+    useEffect(() => {
+        // rename the data
+        if (apiCall && !error && !isLoading) {
+            const renamedData = renameData(apiCall);
+            setEvents(renamedData);
+        }
+    }, [apiCall, error, isLoading]);
 
-    const dataSource_ = [
-        {
-            key: '1',
-            event: 'Mike',
-            location: 'Barrio la cumbre',
-            date: '10 Downing Street',
-            attenders: 10
-        },
-        {
-            key: '2',
-            event: 'John',
-            location: 42,
-            date: '10 Downing Street',
-            attenders: 10
-        },
-    ];
     const columns_ = [
         {
             title: 'Event',
@@ -66,11 +70,9 @@ export default function Events() {
         },
 
     ];
-    const [source, setSource] = useState<any>(dataSource_);
     const [columns, setColumns] = useState<any>(columns_);
 
     const { Title } = Typography;
-    const { Meta } = Card;
 
     return (
         <>
@@ -80,7 +82,7 @@ export default function Events() {
             {isLoading ? <Skeleton active /> : (
                 <>
                     <SearchBar />
-                    <Table dataSource={source} columns={columns} className="list-events" />
+                    <Table dataSource={events} columns={columns} className="list-events" />
                 </>
             )}
         </>
