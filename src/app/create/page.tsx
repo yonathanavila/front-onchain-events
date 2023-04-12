@@ -40,12 +40,9 @@ export default function Create() {
 
     const handleCallerInfoChange = (event: any) => {
         setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
-
-        console.log(formInfo);
     };
 
     function handlerDate(time: any): void {
-        console.log(time);
         setFormInfo({ ...formInfo, event_date_start: time[0]['$d'].toString(), event_date_end: time[1]['$d'].toString() });
     }
 
@@ -126,7 +123,7 @@ export default function Create() {
                         <br />
                         <br />
                         <p>
-                            Be the most descriptive so your attendees don't get lost 🕵🏽‍♂️
+                            Be the most descriptive so your attendees don&apos;t get lost 🕵🏽‍♂️
                         </p>
                         <Input
                             value={formInfo.event_location}

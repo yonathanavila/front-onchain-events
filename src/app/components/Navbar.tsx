@@ -3,9 +3,9 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import { Layout, Menu, theme } from 'antd';
 import logo from "public/img/OnchainEventsLogo.png";
-import { dafaultChainId, toHexString } from '../../utils/constants.tsx';
 import { useEffect, useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { dafaultChainId, toHexString } from '../../../utils/constants';
 
 const { Header } = Layout;
 
