@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import { Card, Col, Row, Table, Input, DatePicker, Typography, Button } from "antd";
-import { LockOutlined } from '@ant-design/icons';
+import { LockOutlined, CopyOutlined } from '@ant-design/icons';
 
 
 export default function DetailEvent() {
@@ -142,6 +142,13 @@ export default function DetailEvent() {
 
                         >
                             Attend Onchain Event
+                        </Button>
+                        <Button
+                            icon={<CopyOutlined />}
+                            size={size}
+                            style={{ backgroundColor: '#520339', border: 'none', color: '#fff', marginLeft: '10px' }}
+                        >
+                            Share link
                         </Button>
                         {!error && !result && loading && (
                             <span>&nbsp;Note this may take a few moments.</span>

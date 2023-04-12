@@ -58,7 +58,7 @@ export default function Create() {
                 throw new Error("Invalid fee");
             }
 
-            const response = await fetch('/api/create', {
+            const response = await fetch('/api/v1/T2', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,6 +72,7 @@ export default function Create() {
                 setResult(data.result);
             }
         } catch (error: any) {
+            console.error(error);
             setError(error.message);
         } finally {
             setLoading(false);
