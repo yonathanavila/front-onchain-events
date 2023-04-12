@@ -3,9 +3,17 @@ import { Card, Table, Skeleton, Typography, Space } from "antd";
 import { useState } from "react";
 import SearchBar from "@/components/SearchBar";
 import Link from "next/link";
+import useSWR from 'swr';
+
+import { useGetOnchainEvents } from "../../../hooks/useGetOnchainEvents";
+
+const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
 
 
 export default function Events() {
+
+    const { data: apiCall, error, isLoading } = useSWR(`${baseURI}/list`);
+
 
     const dataSource_ = [
         {
@@ -60,7 +68,6 @@ export default function Events() {
     ];
     const [source, setSource] = useState<any>(dataSource_);
     const [columns, setColumns] = useState<any>(columns_);
-    const [loading, setLoading] = useState<boolean>(false);
 
     const { Title } = Typography;
     const { Meta } = Card;
@@ -70,7 +77,7 @@ export default function Events() {
             <Title>Onchain Events</Title>
             <br />
             <br />
-            {loading ? <Skeleton active /> : (
+            {isLoading ? <Skeleton active /> : (
                 <>
                     <SearchBar />
                     <Table dataSource={source} columns={columns} className="list-events" />
