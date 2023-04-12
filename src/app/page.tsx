@@ -2,7 +2,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Row, Col, Button } from "antd";
-import logo from "../../public/images/onchainEvents.png";
+import logo from "public/img/onchainEvents.png";
 import Image from 'next/image';
 import { ArrowRightOutlined, CheckCircleTwoTone } from "@ant-design/icons";
 

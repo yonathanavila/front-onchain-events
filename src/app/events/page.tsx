@@ -2,6 +2,7 @@
 import { Card, Table, Skeleton, Typography, Space } from "antd";
 import { useState } from "react";
 import SearchBar from "@/components/SearchBar";
+import Link from "next/link";
 
 
 export default function Events() {
@@ -12,16 +13,14 @@ export default function Events() {
             event: 'Mike',
             location: 'Barrio la cumbre',
             date: '10 Downing Street',
-            attenders: 10,
-            attend: `<a> Go to</a>`
+            attenders: 10
         },
         {
             key: '2',
             event: 'John',
             location: 42,
             date: '10 Downing Street',
-            attenders: 10,
-            attend: `<a> Go to</a>`
+            attenders: 10
         },
     ];
     const columns_ = [
@@ -51,8 +50,8 @@ export default function Events() {
             key: 'action',
             render: (_: any, record: any) => (
                 <Space size="middle">
-                    <a>Attend</a>
-                    <a>Invite</a>
+                    <Link href={'/events/1/invite'}>Attend</Link>
+                    <Link href={'/events/1/invite'}>Invite</Link>
                 </Space>
             ),
         },

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import { Layout, Menu, theme } from 'antd';
-import logo from "public/images/OnchainEventsLogo.png";
+import logo from "public/img/OnchainEventsLogo.png";
 import { dafaultChainId, toHexString } from '../../utils/constants.tsx';
 import { useEffect, useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -43,11 +43,10 @@ export default function Navbar() {
                 src={logo}
                 onClick={() => router.push("/")}
                 alt='logo'
-                width={63}
+                width={53}
                 className='main-logo'
-                height={63}
-            />,
-            showOnRedirectPage: true,
+                height={53}
+            />
         },
         {
             key: '/create',
@@ -64,8 +63,7 @@ export default function Navbar() {
             label:
                 <div className='connect-button'>
                     <ConnectButton label={'Connect wallet'} />
-                </div>,
-            showOnRedirectPage: true,
+                </div>
 
         },
     ]

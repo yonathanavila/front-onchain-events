@@ -117,6 +117,22 @@ function Providers({ children }: P) {
                             colorTextDescription: 'gray',
                             colorText: '#fff'
                         },
+                        Card: {
+                            colorBgContainer: '#780650',
+                            colorBgBase: '#780650',
+                            colorBgLayout: '#780650',
+                            colorFill: '#780650',
+                            colorBgTextActive: '#780650',
+                            colorInfoText: '#780650',
+                            colorPrimaryTextActive: '#780650',
+                            colorPrimaryText: '#780650',
+
+                            colorTextLabel: '#780650',
+                            colorTextBase: '#780650',
+                            colorTextSecondary: '#780650',
+                            colorTextDescription: 'gray',
+                            colorText: '#fff'
+                        }
                     }
                 }}
             >
@@ -127,7 +143,6 @@ function Providers({ children }: P) {
                         theme={myCustomThem}
                     >
                         {children}
-                        <Analytics />
                     </RainbowKitProvider >
                 </WagmiConfig>
             </ConfigProvider>
