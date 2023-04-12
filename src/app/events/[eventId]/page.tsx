@@ -1,14 +1,16 @@
 "use client";
 import { useMemo, useState } from "react";
-import { Card, Col, Row, Table, Input, DatePicker, Typography, Button } from "antd";
+import { Card, Col, Row, Table, Typography, Button } from "antd";
 import { LockOutlined } from '@ant-design/icons';
+import useSWR from 'swr';
 
+const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
 
 export default function DetailEvent() {
+    const { data: apiCall, error, isLoading } = useSWR(`${baseURI}/list`);
     const [result, setResult] = useState();
     const [size, setSize] = useState<any>('large');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<any>();
     const [admin, isAdmin] = useState(false);
     const [editableStrWithSuffix, setEditableStrWithSuffix] = useState(
         'This is a loooooooooooooooooooooooooooooooong editable text with suffix.',
@@ -51,6 +53,7 @@ export default function DetailEvent() {
             key: 'score',
         },
     ];
+
     return (
         <div className="img-bg">
 
@@ -236,7 +239,6 @@ export default function DetailEvent() {
                                     loading={loading}
                                     onClick={() => {
                                         setLoading(true);
-                                        setError(undefined);
                                         setResult(undefined);
                                     }}
 
