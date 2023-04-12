@@ -9,6 +9,7 @@ import { wagmiClient } from '../../utils/functions/client';
 import { chainSelected } from '../../utils/functions/chain';
 import { chains } from '../../utils/functions/provider';
 import { ConfigProvider } from 'antd';
+import { SWRConfig } from 'swr';
 
 type P = PropsWithChildren;
 
@@ -59,100 +60,107 @@ function Providers({ children }: P) {
 
     return (
         <div>
-            <ConfigProvider
-                theme={{
-                    token: {
-                        colorPrimary: '#780650',
-                        colorText: '#fff',
-                        colorTextSecondary: '#fff',
-                        colorTextDescription: 'gray',
-
-                        colorBorder: '#780650',
-                        colorBorderBg: '#780650',
-                        colorBorderSecondary: '#780650',
-                    },
-                    components: {
-                        Steps: {
-
-                            colorBgContainer: '#fff',
-                            colorBgBase: '#780650',
-                            colorBgLayout: '#780650',
-                            colorFill: '#780650',
-                            colorBgTextActive: '#fff',
-                            colorInfoText: '#fff',
-                            colorPrimaryTextActive: '#fff',
-                            colorPrimaryText: '#fff',
-
-                            colorTextLabel: '#fff',
-                            colorTextBase: '#fff',
+            <SWRConfig
+                value={{
+                    refreshInterval: 86400,
+                    fetcher: (resource, init) =>
+                        fetch(resource, init).then((res) => res.json()),
+                }}>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            colorPrimary: '#780650',
+                            colorText: '#fff',
                             colorTextSecondary: '#fff',
                             colorTextDescription: 'gray',
-                            colorText: '#fff'
-                        },
-                        Table: {
-                            colorBgBase: '#780650',
-                            colorBgContainer: '#780650',
-                            colorTextBase: '#fff',
-                            colorTextLabel: '#fff',
-                            colorTextPlaceholder: '#fff',
-                            colorBgTextHover: '#780650',
-                            colorBgTextActive: '#780650',
-                            colorInfoBg: '#780650',
-                            colorBgContainerDisabled: '#780650',
-                            colorBgLayout: '#780650',
-                            colorInfoBgHover: '#780650',
-                            colorBgElevated: '#780650',
-                            colorIcon: '#fff',
-                            colorIconHover: '#fff',
+
                             colorBorder: '#780650',
                             colorBorderBg: '#780650',
                             colorBorderSecondary: '#780650',
                         },
-                        Input: {
-                            colorBgContainer: '#780650',
-                            colorBgBase: '#780650',
-                            colorBgLayout: '#780650',
-                            colorFill: '#780650',
-                            colorBgTextActive: '#780650',
-                            colorInfoText: '#780650',
-                            colorPrimaryTextActive: '#780650',
-                            colorPrimaryText: '#780650',
+                        components: {
+                            Steps: {
 
-                            colorTextLabel: '#780650',
-                            colorTextBase: '#780650',
-                            colorTextSecondary: '#780650',
-                            colorTextDescription: 'gray',
-                            colorText: '#fff'
-                        },
-                        Card: {
-                            colorBgContainer: '#780650',
-                            colorBgBase: '#780650',
-                            colorBgLayout: '#780650',
-                            colorFill: '#780650',
-                            colorBgTextActive: '#780650',
-                            colorInfoText: '#780650',
-                            colorPrimaryTextActive: '#780650',
-                            colorPrimaryText: '#780650',
+                                colorBgContainer: '#fff',
+                                colorBgBase: '#780650',
+                                colorBgLayout: '#780650',
+                                colorFill: '#780650',
+                                colorBgTextActive: '#fff',
+                                colorInfoText: '#fff',
+                                colorPrimaryTextActive: '#fff',
+                                colorPrimaryText: '#fff',
 
-                            colorTextLabel: '#780650',
-                            colorTextBase: '#780650',
-                            colorTextSecondary: '#780650',
-                            colorTextDescription: 'gray',
-                            colorText: '#fff'
+                                colorTextLabel: '#fff',
+                                colorTextBase: '#fff',
+                                colorTextSecondary: '#fff',
+                                colorTextDescription: 'gray',
+                                colorText: '#fff'
+                            },
+                            Table: {
+                                colorBgBase: '#780650',
+                                colorBgContainer: '#780650',
+                                colorTextBase: '#fff',
+                                colorTextLabel: '#fff',
+                                colorTextPlaceholder: '#fff',
+                                colorBgTextHover: '#780650',
+                                colorBgTextActive: '#780650',
+                                colorInfoBg: '#780650',
+                                colorBgContainerDisabled: '#780650',
+                                colorBgLayout: '#780650',
+                                colorInfoBgHover: '#780650',
+                                colorBgElevated: '#780650',
+                                colorIcon: '#fff',
+                                colorIconHover: '#fff',
+                                colorBorder: '#780650',
+                                colorBorderBg: '#780650',
+                                colorBorderSecondary: '#780650',
+                            },
+                            Input: {
+                                colorBgContainer: '#780650',
+                                colorBgBase: '#780650',
+                                colorBgLayout: '#780650',
+                                colorFill: '#780650',
+                                colorBgTextActive: '#780650',
+                                colorInfoText: '#780650',
+                                colorPrimaryTextActive: '#780650',
+                                colorPrimaryText: '#780650',
+
+                                colorTextLabel: '#780650',
+                                colorTextBase: '#780650',
+                                colorTextSecondary: '#780650',
+                                colorTextDescription: 'gray',
+                                colorText: '#fff'
+                            },
+                            Card: {
+                                colorBgContainer: '#780650',
+                                colorBgBase: '#780650',
+                                colorBgLayout: '#780650',
+                                colorFill: '#780650',
+                                colorBgTextActive: '#780650',
+                                colorInfoText: '#780650',
+                                colorPrimaryTextActive: '#780650',
+                                colorPrimaryText: '#780650',
+
+                                colorTextLabel: '#780650',
+                                colorTextBase: '#780650',
+                                colorTextSecondary: '#780650',
+                                colorTextDescription: 'gray',
+                                colorText: '#fff'
+                            }
                         }
-                    }
-                }}
-            >
-                <WagmiConfig client={wagmiClient}>
-                    <RainbowKitProvider
-                        chains={chains}
-                        initialChain={chainSelected[Number(chainId || 0)]}
-                        theme={myCustomThem}
-                    >
-                        {children}
-                    </RainbowKitProvider >
-                </WagmiConfig>
-            </ConfigProvider>
+                    }}
+                >
+                    <WagmiConfig client={wagmiClient}>
+                        <RainbowKitProvider
+                            chains={chains}
+                            initialChain={chainSelected[Number(chainId || 0)]}
+                            theme={myCustomThem}
+                        >
+                            {children}
+                        </RainbowKitProvider >
+                    </WagmiConfig>
+                </ConfigProvider>
+            </SWRConfig>
         </div>
     )
 }
