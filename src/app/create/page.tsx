@@ -1,18 +1,18 @@
 "use client";
 import { useRef, useState } from "react";
+import { useRouter } from 'next/navigation';
 import { LockOutlined } from '@ant-design/icons';
 import { stepsList } from "../../../utils/constants.tsx";
-import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography } from "antd";
+import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography, Result } from "antd";
 import { validateEmail, validateEther } from "../../../utils/functions/validations.ts";
 
 
 export default function Create() {
-    const [result, setResult] = useState();
-    const [isValidData, setIsValiData] = useState();
+    const [result, setResult] = useState<any>();
     const [size, setSize] = useState<any>('large');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<any>();
-    const formRef: any = useRef(null);
+    const router = useRouter();
     const regex = /^\s*$/; // regular expression that matches empty strings or strings that only contain whitespace
 
     const [formInfo, setFormInfo] = useState<any>({
@@ -60,16 +60,18 @@ export default function Create() {
             if (!validateEther(formInfo.event_fee)) {
                 throw new Error("Invalid fee");
             }
+
             if (
-                !regex.test(formInfo.event_name) ||
-                !regex.test(formInfo.event_date_start) ||
-                !regex.test(formInfo.event_date_end) ||
-                !regex.test(formInfo.event_location) ||
-                !regex.test(formInfo.event_organizer) ||
-                !regex.test(formInfo.event_organizer_email) ||
-                !regex.test(formInfo.event_fee) ||
-                !regex.test(formInfo.event_description)
+                regex.test(formInfo.event_name) ||
+                regex.test(formInfo.event_date_start) ||
+                regex.test(formInfo.event_date_end) ||
+                regex.test(formInfo.event_location) ||
+                regex.test(formInfo.event_organizer) ||
+                regex.test(formInfo.event_organizer_email) ||
+                regex.test(formInfo.event_fee) ||
+                regex.test(formInfo.event_description)
             ) {
+                console.log('Information is: ', formInfo);
                 throw new Error('Empty values');
             }
 
@@ -84,7 +86,9 @@ export default function Create() {
             if (data.error) {
                 setError(data.error);
             } else {
-                setResult(data.result);
+                console.log('data: ', data);
+                setResult(data);
+                /*  router.push('/dashboard'); */
             }
         } catch (error: any) {
             console.error(error);
@@ -95,6 +99,20 @@ export default function Create() {
     };
 
     const { Title } = Typography;
+    const isValid = () => {
+        return (
+            formInfo.event_name &&
+            formInfo.event_date_start &&
+            formInfo.event_date_end &&
+            formInfo.event_location &&
+            formInfo.event_organizer &&
+            validateEmail(formInfo.event_organizer_email) &&
+            validateEther(formInfo.event_fee) &&
+            formInfo.event_description
+
+        );
+    };
+    const isValidData = isValid();
 
     const getStep = () => {
         if (!!result) {
@@ -102,11 +120,34 @@ export default function Create() {
         } else if (isValidData) {
             return 1;
         }
-        return 1;
-    }
+        return 0;
+    };
 
     const { RangePicker } = DatePicker;
     const { TextArea } = Input;
+
+    if (result) {
+
+        return (
+            <Result
+                status="success"
+                title="Created Onchain event!"
+                subTitle="Your Onchain event request has been created and is ready to be listed."
+                extra={[
+                    <Button key="contract">
+                        <a href={`/events/${result[0]?.id}/attend`} target="_blank">
+                            View created event
+                        </a>
+                    </Button>,
+                    <Button key="share">
+                        <a href={`/events/${result[0]?.id}/attend`} target="_blank">
+                            Share this url
+                        </a>
+                    </Button>
+                ]}
+            />
+        );
+    }
 
     return (
         <div>

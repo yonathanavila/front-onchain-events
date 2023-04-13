@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import { useMemo, useState } from "react";
 import { usePathname } from 'next/navigation';
 import { LockOutlined, CopyOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Table, Typography, Button, Skeleton } from "antd";
+import { Card, Col, Row, Table, Typography, Button, Skeleton, notification } from "antd";
 
 const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
 
@@ -22,6 +22,16 @@ export default function DetailEvent() {
     const { data: apiCall, error, isLoading } = useSWR(`${baseURI}/${pid}`);
 
     const { Paragraph } = Typography;
+
+    const openNotification = ({ message, description }: any) => {
+        notification.open({
+            message,
+            description,
+            onClick: () => {
+                console.log('Notification Clicked!');
+            },
+        });
+    };
 
     const dataSource = [
         {
@@ -58,6 +68,9 @@ export default function DetailEvent() {
 
     const copyToClipboard = (e: any) => {
         navigator.clipboard.writeText(window.location.toString())
+        openNotification({
+            message: 'Link copied to clipboard',
+        });
     }
 
     return (
