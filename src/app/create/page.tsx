@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { LockOutlined } from '@ant-design/icons';
 import { stepsList } from "../../../utils/constants.tsx";
 import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography } from "antd";
@@ -12,6 +12,8 @@ export default function Create() {
     const [size, setSize] = useState<any>('large');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<any>();
+    const formRef: any = useRef(null);
+    const regex = /^\s*$/; // regular expression that matches empty strings or strings that only contain whitespace
 
     const [formInfo, setFormInfo] = useState<any>({
         event_name: "",
@@ -38,7 +40,8 @@ export default function Create() {
     }
 
     const handleCallerInfoChange = (event: any) => {
-        setFormInfo({ ...formInfo, [event.target.name]: event.target.value });
+        const { name, value } = event.target;
+        setFormInfo({ ...formInfo, [name]: value });
     };
 
     function handlerDate(time: any): void {
@@ -46,6 +49,7 @@ export default function Create() {
     }
 
     const handleSubmit = async () => {
+
         try {
 
             //------- validate information
@@ -55,6 +59,28 @@ export default function Create() {
 
             if (!validateEther(formInfo.event_fee)) {
                 throw new Error("Invalid fee");
+            }
+
+            /*             event_name: "Onchain Events",
+                        event_date_start: "2021-08-03T00:00:00.000Z",
+                        event_date_end: "2021-08-03T00:00:00.000Z",
+                        event_location: "Barrio la cumbre",
+                        event_organizer: "Mike",
+                        event_organizer_email: "evenst@onchainevents.com",
+                        event_fee: "0.1",
+                        event_description: "This is a demo event"
+             */
+            if (
+                !regex.test(formInfo.event_name) ||
+                !regex.test(formInfo.event_date_start) ||
+                !regex.test(formInfo.event_date_end) ||
+                !regex.test(formInfo.event_location) ||
+                !regex.test(formInfo.event_organizer) ||
+                !regex.test(formInfo.event_organizer_email) ||
+                !regex.test(formInfo.event_fee) ||
+                !regex.test(formInfo.event_description)
+            ) {
+                throw new Error('Empty values');
             }
 
             const response = await fetch('/api/v1/T2', {
@@ -93,7 +119,6 @@ export default function Create() {
     const { TextArea } = Input;
 
     return (
-
         <div>
             <Row>
                 <Col span={16}>
@@ -110,6 +135,7 @@ export default function Create() {
                         <Input
                             value={formInfo.event_name}
                             name="event_name"
+                            required={true}
                             className="form-control"
                             prefix="Event Name:"
                             onChange={handleCallerInfoChange}
@@ -128,6 +154,7 @@ export default function Create() {
                         <Input
                             value={formInfo.event_location}
                             name="event_location"
+                            required={true}
                             className="form-control"
                             prefix="Event Location:"
                             onChange={handleCallerInfoChange}
@@ -140,6 +167,7 @@ export default function Create() {
                         <Input
                             value={formInfo.event_organizer}
                             name="event_organizer"
+                            required={true}
                             className="form-control"
                             prefix="Event Organizer:"
                             onChange={handleCallerInfoChange}
@@ -152,6 +180,7 @@ export default function Create() {
                         <Input
                             value={formInfo.event_organizer_email}
                             name="event_organizer_email"
+                            required={true}
                             type="email"
                             className="form-control"
                             prefix="Organizer Email:"
@@ -165,6 +194,7 @@ export default function Create() {
                         <Input
                             value={formInfo.event_fee}
                             name="event_fee"
+                            required={true}
                             className="form-control"
                             type="number"
                             prefix="Entrance fee:"
@@ -181,6 +211,7 @@ export default function Create() {
                             placeholder="This description will be displayed on the Onchain Events page."
                             value={formInfo.event_description}
                             name="event_description"
+                            required={true}
                             prefix="Event Description:"
                             onChange={handleCallerInfoChange}
                         />
@@ -209,6 +240,7 @@ export default function Create() {
                             <div className="error-text">{error}</div>
                         </div>
                         }
+
                         <br />
                         <br />
                     </Card>
