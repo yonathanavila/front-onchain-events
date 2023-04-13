@@ -60,16 +60,6 @@ export default function Create() {
             if (!validateEther(formInfo.event_fee)) {
                 throw new Error("Invalid fee");
             }
-
-            /*             event_name: "Onchain Events",
-                        event_date_start: "2021-08-03T00:00:00.000Z",
-                        event_date_end: "2021-08-03T00:00:00.000Z",
-                        event_location: "Barrio la cumbre",
-                        event_organizer: "Mike",
-                        event_organizer_email: "evenst@onchainevents.com",
-                        event_fee: "0.1",
-                        event_description: "This is a demo event"
-             */
             if (
                 !regex.test(formInfo.event_name) ||
                 !regex.test(formInfo.event_date_start) ||
