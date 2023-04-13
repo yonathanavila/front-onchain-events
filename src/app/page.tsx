@@ -1,9 +1,9 @@
 "use client";
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import { Row, Col, Button } from "antd";
-import logo from "public/img/OnchainEvents_main.png";
 import Image from 'next/image';
+import { Row, Col, Button } from "antd";
+import { useRouter } from 'next/navigation';
+import logo from "public/img/OnchainEvents_main.png";
 import { ArrowRightOutlined, CheckCircleTwoTone } from "@ant-design/icons";
 
 

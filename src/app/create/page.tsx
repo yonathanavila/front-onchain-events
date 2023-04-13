@@ -1,15 +1,14 @@
 "use client";
 import { useState } from "react";
-import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography } from "antd";
 import { LockOutlined } from '@ant-design/icons';
 import { stepsList } from "../../../utils/constants.tsx";
+import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography } from "antd";
 import { validateEmail, validateEther } from "../../../utils/functions/validations.ts";
 
 
 export default function Create() {
     const [result, setResult] = useState();
     const [isValidData, setIsValiData] = useState();
-    const [steps, setSteps] = useState();
     const [size, setSize] = useState<any>('large');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<any>();
@@ -230,6 +229,8 @@ export default function Create() {
                     />
                 </Col>
             </Row>
+            <br />
+            <br />
         </div>
     )
 
