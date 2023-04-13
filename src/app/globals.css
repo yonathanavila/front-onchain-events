@@ -87,6 +87,7 @@ body {
       transparent,
       rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
   font-family: 'Source Sans Pro' !important;
+  background-color: '#0E0E2B';
 }
 
 a {
@@ -102,7 +103,7 @@ a {
 
 ul {
   height: 100%;
-
+  background-color: #121236 !important;
 }
 
 .main-logo {
@@ -149,11 +150,11 @@ li.ant-menu-overflow-item {
 
 .ant-select-selector {
   background-color: #001529 !important;
-  color: #B516AB !important;
+  color: #0E0E2B !important;
 }
 
 .ant-select-arrow {
-  color: #B516AB !important;
+  color: #0E0E2B !important;
 }
 
 .connect-button {
@@ -207,6 +208,7 @@ textarea::placeholder {
 }
 
 .navbar-items {
+  background-color: #001121 !important;
   font-family: 'Source Sans Pro' !important;
 }
 
@@ -246,4 +248,13 @@ th {
 
 td {
   text-align: center !important;
+}
+
+.ant-pagination-item {
+  background-color: #181A1B !important;
+  color: #fff !important;
+}
+
+a {
+  color: #fff !important;
 }

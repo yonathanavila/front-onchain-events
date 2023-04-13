@@ -69,15 +69,14 @@ export default function Navbar() {
     ]
     return (
         <div>
-            <Header>
+            <Header style={{ backgroundColor: '#001121' }}>
                 <Menu
-                    theme="dark"
                     mode="horizontal"
                     selectedKeys={[path]}
                     items={false ? menuItems.filter((item: any) => item?.showOnRedirectPage) : menuItems}
                     className='navbar-items'
-                ></Menu>
+                />
             </Header>
-        </div>
+        </div >
     )
 }

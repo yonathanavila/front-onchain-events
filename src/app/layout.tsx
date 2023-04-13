@@ -25,7 +25,7 @@ export default function RootLayout({
             <Navbar />
             <Content style={{ padding: '0 50px', color: '#fff' }}>
               <div className={styles.container}>
-                <div className="site-layout-content" style={{ backgroundColor: "#121236" }}>
+                <div className="site-layout-content" >
                   {children}
                 </div>
               </div>
