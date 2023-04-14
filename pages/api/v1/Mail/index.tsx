@@ -7,7 +7,9 @@ var mailchain = Mailchain.fromSecretRecoveryPhrase(process.env.SECRET_RECOVERY_P
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { userMailChain, id } = req.body;
-
+    const pattern = /userMailChain/;
+    const awesomemail = pattern.test(userMailChain) ? `${userMailChain}@mailchain.com` : userMailChain;
+    console.log(awesomemail);
     try {
         const { data, error } = await supabase.from("T2").select('*').eq('id', id);
         const result: any = data;
@@ -22,16 +24,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         Sincerely,
         ${result[0]?.C6}`;
         var msg = {
-            to: [createMailchainAddress(userMailChain)],
+            to: [createMailchainAddress(awesomemail)],
             from: sender.address,
-            subject: 'Sign in to Todos',
+            subject: `Invitation to ${result[0]?.C1} event`,
             content: {
                 text: 'Hello! Click the link below to finish signing in to Todos.\r\n\r\n' + link,
                 html:
                     invitationLetter +
                     '<p>Click the link below to finish to attent in to Onchain Events.</p><p><a href="' +
                     link +
-                    '">Sign in</a></p>',
+                    '">Attent event</a></p>',
             },
         };
         const result_ = await mailchain.sendMail(msg);

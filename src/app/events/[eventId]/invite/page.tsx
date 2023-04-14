@@ -73,7 +73,7 @@ export default function AttendEvent() {
                 <Skeleton active />
             ) : (
                 <Row>
-                    <Title>Invite a friend to - {apiCall[0]?.event}</Title>
+                    <Title>Extend an invitation to you to attend - {apiCall[0]?.event}</Title>
                     <Col span={15}>
                         <Card bordered={false}>
                             <Title level={3}>{apiCall[0]?.location}</Title>
