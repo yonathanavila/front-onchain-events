@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             from: sender.address,
             subject: `Invitation to ${result[0]?.C1} event`,
             content: {
-                text: 'Hello! Click the link below to finish signing in to Todos.\r\n\r\n' + link,
+                text: 'In order to complete your registration and secure your attendance at the event, please click on the link below. This will take you to the registration page where you can provide your information and confirm your attendance.\r\n\r\n' + link,
                 html:
                     invitationLetter +
                     '<p>Click the link below to finish to attent in to Onchain Events.</p><p><a href="' +
