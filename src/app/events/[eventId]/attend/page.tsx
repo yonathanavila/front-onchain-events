@@ -39,16 +39,18 @@ export default function DetailEvent() {
         try {
             setLoading(true);
             await AttendOnchainEvent(provider, signer, apiCall[0]?.root);
+            const newData = {
+                eventId: pid,
+                userAddress: address,
+                leaf: `${apiCall[0]?.root}`
+            };
+            console.log('newData: ', newData);
             const response = await fetch('/api/v1/T3', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    eventId: pid,
-                    userAddress: address,
-                    leaf: `${apiCall[0]?.root}`
-                }),
+                body: JSON.stringify(newData),
             });
             const data = await response.json();
             if (data.error) {

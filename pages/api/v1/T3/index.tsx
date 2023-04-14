@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { supabase } from '../../../lib/supabase';
+import { supabase } from '../../../../lib/supabase';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { eventId, userAddress, leaf } = req.body;
 
     const newData = {
-        C1: eventId,
+        C1: Number(eventId),
         C2: userAddress,
         C3: leaf,
     };
