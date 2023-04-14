@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { useRouter } from 'next/navigation';
-import { useProvider, useSigner } from 'wagmi';
+import { useProvider, useSigner, useAccount } from 'wagmi';
 import { LockOutlined } from '@ant-design/icons';
 import { stepsList } from "../../../utils/constants.tsx";
 import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography, Result } from "antd";
@@ -20,7 +20,7 @@ export default function Create() {
     const regex = /^\s*$/; // regular expression that matches empty strings or strings that only contain whitespace
     const { data: signer } = useSigner(chainId);
     const provider = useProvider(chainId);
-
+    const { address, isConnecting, isDisconnected } = useAccount();
 
     const [formInfo, setFormInfo] = useState<any>({
         event_name: "",
@@ -143,6 +143,20 @@ export default function Create() {
 
     const { RangePicker } = DatePicker;
     const { TextArea } = Input;
+
+    if (!address) {
+        return (
+            <Result
+                status="warning"
+                title="In order to proceed, it is necessary to connect your wallet."
+                extra={
+                    <Button type="primary" key="console" onClick={() => router.push('/')}>
+                        Go to home
+                    </Button>
+                }
+            />
+        )
+    }
 
     if (result) {
 
