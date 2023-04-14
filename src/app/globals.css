@@ -268,3 +268,8 @@ a {
   background-color: #181A1B !important;
   color: #fff !important;
 }
+
+.ant-menu-overflow {
+  background-color: #001121 !important;
+  color: #fff !important;
+}
