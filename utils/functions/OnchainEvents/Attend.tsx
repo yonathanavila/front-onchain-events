@@ -13,6 +13,7 @@ export const AttendOnchainEvent = async (
     try {
         console.log('AttendOnchainEvent: ', leaf);
         const maxPriorityFeePerGas = await getMaxPriorityFeePerGas(provider);
+        console.log('maxPriorityFeePerGas: ', maxPriorityFeePerGas);
         const args: any = []
         args.push({
             gasLimit,

@@ -7,16 +7,12 @@ var mailchain = Mailchain.fromSecretRecoveryPhrase(process.env.SECRET_RECOVERY_P
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { userMailChain, id } = req.body;
-    console.log(req.body);
 
     try {
         const { data, error } = await supabase.from("T2").select('*').eq('id', id);
         const result: any = data;
-        console.log(result);
         var sender = await mailchain.user();
         const link = `https://front-onchain-events.vercel.app/events/${id}/attend`;
-        console.log(sender);
-        console.log(userMailChain);
         const invitationLetter = `Dear Guest,
 
         You are cordially invited to attend the ${result[0]?.C1} event on ${new Date(result[0]?.C2 * 1000).toLocaleString()} at ${result[0]?.C4}. The event will feature live music, food and drinks, and an opportunity to network with like-minded individuals.

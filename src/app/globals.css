@@ -258,3 +258,13 @@ td {
 a {
   color: #fff !important;
 }
+
+.ant-modal-content {
+  background-color: #181A1B !important;
+  color: #fff !important;
+}
+
+.ant-modal-title {
+  background-color: #181A1B !important;
+  color: #fff !important;
+}

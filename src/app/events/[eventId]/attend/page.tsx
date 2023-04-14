@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { usePathname } from 'next/navigation';
 import { useProvider, useSigner, useAccount } from 'wagmi';
 import { LockOutlined, CopyOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Table, Typography, Button, Skeleton, notification } from "antd";
+import { Card, Col, Row, Table, Typography, Button, Skeleton, notification, Modal, Input } from "antd";
 import { AttendOnchainEvent } from '../../../../../utils/functions/OnchainEvents/Attend';
 
 const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
@@ -14,6 +14,7 @@ export default function DetailEvent() {
     const [result, setResult] = useState<any>();
     const [size, setSize] = useState<any>('large');
     const [loading, setLoading] = useState(false);
+    const [email, setEmail] = useState<any>();
     const [editableStrWithSuffix, setEditableStrWithSuffix] = useState(
         'This is a loooooooooooooooooooooooooooooooong editable text with suffix.',
     );
@@ -27,6 +28,24 @@ export default function DetailEvent() {
     const { data: signer } = useSigner(chainId);
     const provider = useProvider(chainId);
     const [error, setError] = useState<any>();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleEmail = (e: any) => {
+        setEmail(e.target.value);
+    }
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        handleAttend();
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
     const { address, isConnecting, isDisconnected } = useAccount()
 
@@ -58,7 +77,31 @@ export default function DetailEvent() {
             } else {
                 console.log('data: ', data);
                 setResult(data);
+                /// send email attestation
+                const newData_ = {
+                    "userMailChain": email,
+                    "id": pid,
+                }
 
+                const response = await fetch('/api/v1/Mail', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newData_),
+                });
+                const data_ = await response.json();
+                if (data_.error) {
+                    setError(data_.error);
+                } else {
+                    console.log('data: ', data_);
+                    setResult(data_);
+                    setIsModalOpen(false);
+                    openNotification({
+                        message: 'Success',
+                        description: 'You have successfully attended the event',
+                    });
+                }
             }
 
             setLoading(false);
@@ -170,14 +213,31 @@ export default function DetailEvent() {
                                 <Paragraph>
                                     {apiCall[0]?.eventDescription}
                                 </Paragraph>
-
+                                <Modal title="Mailchain" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                                    <Input
+                                        value={email}
+                                        name="email"
+                                        required={true}
+                                        className="form-control"
+                                        prefix="Mailchain :"
+                                        placeholder="vitalik"
+                                        onChange={handleEmail}
+                                    />
+                                    {!error && !result && loading && (
+                                        <span>&nbsp;Note this may take a few moments.</span>
+                                    )}
+                                    {error && <div>
+                                        <div className="error-text">{error}</div>
+                                    </div>
+                                    }
+                                </Modal>
                                 <Button
                                     style={{ backgroundColor: '#520339', border: 'none', color: '#fff' }}
                                     icon={<LockOutlined />}
                                     size={size}
                                     disabled={loading}
                                     loading={loading}
-                                    onClick={handleAttend}
+                                    onClick={showModal}
 
                                 >
                                     Attend Onchain Event
@@ -219,3 +279,4 @@ export default function DetailEvent() {
         </div >
     )
 }
+

@@ -179,8 +179,24 @@ function Providers({ children }: P) {
                                 colorTextDescription: 'gray',
                                 colorText: '#fff'
                             },
+                            Modal: {
+                                colorBgContainer: '#600540',
+                                colorBgBase: '#600540',
+                                colorBgLayout: '#600540',
+                                colorFill: '#600540',
+                                colorBgTextActive: '#600540',
+                                colorInfoText: '#600540',
+                                colorPrimaryTextActive: '#600540',
+                                colorPrimaryText: '#600540',
 
+                                colorTextLabel: '#600540',
+                                colorTextBase: '#600540',
+                                colorTextSecondary: '#600540',
+                                colorTextDescription: 'gray',
+                                colorText: '#fff'
+                            },
                         }
+
                     }}
                 >
                     <WagmiConfig client={wagmiClient}>
@@ -194,7 +210,7 @@ function Providers({ children }: P) {
                     </WagmiConfig>
                 </ConfigProvider>
             </SWRConfig>
-        </div>
+        </div >
     )
 }
 
