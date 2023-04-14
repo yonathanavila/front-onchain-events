@@ -2,14 +2,17 @@
 import useSWR from 'swr';
 import { useMemo, useState } from "react";
 import { usePathname } from 'next/navigation';
+import { useProvider, useSigner } from 'wagmi';
 import { LockOutlined, CopyOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Table, Typography, Button, Skeleton, notification } from "antd";
+import { AttendOnchainEvent } from '../../../../../utils/functions/OnchainEvents/Attend';
 
 const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
+const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 280 : 280;
 
 export default function DetailEvent() {
     const [size, setSize] = useState<any>('large');
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [editableStrWithSuffix, setEditableStrWithSuffix] = useState(
         'This is a loooooooooooooooooooooooooooooooong editable text with suffix.',
     );
@@ -20,8 +23,21 @@ export default function DetailEvent() {
     const router = usePathname();
     const pid = router?.split("/")[2].toString();
     const { data: apiCall, error, isLoading } = useSWR(`${baseURI}/${pid}`);
+    const { data: signer } = useSigner(chainId);
+    const provider = useProvider(chainId);
+
 
     const { Paragraph } = Typography;
+
+    const handleAttend = async () => {
+        try {
+            setLoading(true);
+            await AttendOnchainEvent(provider, signer, apiCall[0]?.root);
+            setLoading(false);
+        } catch (error: any) {
+            console.error(error);
+        }
+    }
 
     const openNotification = ({ message, description }: any) => {
         notification.open({
@@ -131,8 +147,9 @@ export default function DetailEvent() {
                                     style={{ backgroundColor: '#520339', border: 'none', color: '#fff' }}
                                     icon={<LockOutlined />}
                                     size={size}
-                                    disabled={isLoading}
-                                    loading={isLoading}
+                                    disabled={loading}
+                                    loading={loading}
+                                    onClick={handleAttend}
 
                                 >
                                     Attend Onchain Event

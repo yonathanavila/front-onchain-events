@@ -38,11 +38,8 @@ export default function GenerateMerkleTree(
         console.log('Merkle root:', root);
         const leaves_ = tree.leaves.map((l: any) => `0x${l.toString('hex')}`);
 
-        console.log('Merkle leaves:', leaves_);
-
         // delete last position of tree.leaves
         const proofNew = leaves_.slice(0, -1);
-        console.log('ProofNew:', proofNew);
 
         const leaf = leaves_[7];
         console.log('Leaf:', leaf);

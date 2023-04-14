@@ -30,6 +30,7 @@ function renameData(events: any) {
             contactInformation: event.C6,
             entranceFee: event.C7,
             eventDescription: event.C8,
+            root: event.C9,
         };
     });
     return mappedEvents;
