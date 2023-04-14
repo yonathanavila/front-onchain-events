@@ -2,7 +2,7 @@
 import useSWR from 'swr';
 import { useMemo, useState } from "react";
 import { usePathname } from 'next/navigation';
-import { useProvider, useSigner } from 'wagmi';
+import { useProvider, useSigner, useAccount } from 'wagmi';
 import { LockOutlined, CopyOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Table, Typography, Button, Skeleton, notification } from "antd";
 import { AttendOnchainEvent } from '../../../../../utils/functions/OnchainEvents/Attend';
@@ -11,6 +11,7 @@ const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
 const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 280 : 280;
 
 export default function DetailEvent() {
+    const [result, setResult] = useState<any>();
     const [size, setSize] = useState<any>('large');
     const [loading, setLoading] = useState(false);
     const [editableStrWithSuffix, setEditableStrWithSuffix] = useState(
@@ -22,17 +23,42 @@ export default function DetailEvent() {
     );
     const router = usePathname();
     const pid = router?.split("/")[2].toString();
-    const { data: apiCall, error, isLoading } = useSWR(`${baseURI}/${pid}`);
+    const { data: apiCall, error: errorSWR, isLoading } = useSWR(`${baseURI}/${pid}`);
     const { data: signer } = useSigner(chainId);
     const provider = useProvider(chainId);
+    const [error, setError] = useState<any>();
 
+    const { address, isConnecting, isDisconnected } = useAccount()
 
     const { Paragraph } = Typography;
 
     const handleAttend = async () => {
+        if (!provider || !signer) {
+            return;
+        }
         try {
             setLoading(true);
             await AttendOnchainEvent(provider, signer, apiCall[0]?.root);
+            const response = await fetch('/api/v1/T3', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    eventId: pid,
+                    userAddress: address,
+                    leaf: `${apiCall[0]?.root}`
+                }),
+            });
+            const data = await response.json();
+            if (data.error) {
+                setError(data.error);
+            } else {
+                console.log('data: ', data);
+                setResult(data);
+
+            }
+
             setLoading(false);
         } catch (error: any) {
             console.error(error);
@@ -91,7 +117,7 @@ export default function DetailEvent() {
 
     return (
         <div className="img-bg">
-            {(isLoading) ? <Skeleton active /> : (error) ? (
+            {(isLoading) ? <Skeleton active /> : (errorSWR) ? (
                 <Skeleton active />
             ) : (
                 <>
@@ -162,11 +188,11 @@ export default function DetailEvent() {
                                 >
                                     Share link
                                 </Button>
-                                {!error && !apiCall && isLoading && (
+                                {!errorSWR && !apiCall && isLoading && (
                                     <span>&nbsp;Note this may take a few moments.</span>
                                 )}
-                                {error && <div>
-                                    <div className="error-text">{error}</div>
+                                {errorSWR && <div>
+                                    <div className="error-text">{errorSWR}</div>
                                 </div>
                                 }
                                 <br />
