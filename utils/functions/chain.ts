@@ -1,3 +1,3 @@
-import { gnosis, scrollTestnet, Chain, baseGoerli, zkSyncTestnet } from 'wagmi/chains';
+import { Chain, sepolia } from 'wagmi/chains';
 
-export const chainSelected: Chain[] = [scrollTestnet, gnosis, baseGoerli, zkSyncTestnet];
+export const chainSelected: Chain[] = [sepolia];

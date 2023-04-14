@@ -1,5 +1,6 @@
 "use client";
-import '@rainbow-me/rainbowkit/styles.css';
+import { SWRConfig } from 'swr';
+import { ConfigProvider } from 'antd';
 import dynamic from 'next/dynamic';
 import { WagmiConfig } from 'wagmi';
 import { PropsWithChildren } from 'react';
@@ -8,8 +9,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { wagmiClient } from '../../utils/functions/client';
 import { chainSelected } from '../../utils/functions/chain';
 import { chains } from '../../utils/functions/provider';
-import { ConfigProvider } from 'antd';
-import { SWRConfig } from 'swr';
+import '@rainbow-me/rainbowkit/styles.css';
 
 type P = PropsWithChildren;
 

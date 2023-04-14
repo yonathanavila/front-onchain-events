@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mailchain/sdk": "^0.18.4",
     "@rainbow-me/rainbowkit": "^0.12.7",
     "@supabase/supabase-js": "^2.20.0",
     "@types/node": "18.15.11",
