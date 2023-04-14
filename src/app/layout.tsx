@@ -30,7 +30,7 @@ export default function RootLayout({
                 </div>
               </div>
             </Content>
-            <Footer style={{ textAlign: 'center', backgroundColor: '#001529', color: '#fff' }}>Onchain Events ©2023 Mailthereum management events efficenly, transparency and secure</Footer>
+            <Footer style={{ textAlign: 'center', backgroundColor: '#001529', color: '#fff' }}>Onchain Events ©2023 With love for <a href='https://twitter.com/developer_dao'>Developer DAO (🧱, 🚀)</a></Footer>
           </Layout>
         </Provider>
       </body>
