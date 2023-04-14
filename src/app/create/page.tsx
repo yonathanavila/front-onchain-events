@@ -1,11 +1,15 @@
 "use client";
 import { useRef, useState } from "react";
 import { useRouter } from 'next/navigation';
+import { useProvider, useSigner } from 'wagmi';
 import { LockOutlined } from '@ant-design/icons';
 import { stepsList } from "../../../utils/constants.tsx";
 import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography, Result } from "antd";
 import { validateEmail, validateEther } from "../../../utils/functions/validations.ts";
+import { RegisterOnchainEvent } from "../../../utils/functions/OnchainEvents/RegisterEvent.tsx";
+import GenerateMerkleTree from "../../../utils/functions/MerkleTree/index.tsx";
 
+const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 280 : 280;
 
 export default function Create() {
     const [result, setResult] = useState<any>();
@@ -14,6 +18,9 @@ export default function Create() {
     const [error, setError] = useState<any>();
     const router = useRouter();
     const regex = /^\s*$/; // regular expression that matches empty strings or strings that only contain whitespace
+    const { data: signer } = useSigner(chainId);
+    const provider = useProvider(chainId);
+
 
     const [formInfo, setFormInfo] = useState<any>({
         event_name: "",
@@ -25,6 +32,16 @@ export default function Create() {
         event_fee: "",
         event_description: ""
     });
+
+    const handleCreateOnchainEvent = async () => {
+        try {
+            const { leaf, root } = GenerateMerkleTree(formInfo);
+            await RegisterOnchainEvent(provider, signer, leaf);
+            return `0x${root}`;
+        } catch (error: any) {
+            console.error(error);
+        }
+    }
 
     const handlerFill = () => {
         setFormInfo({
@@ -74,13 +91,14 @@ export default function Create() {
                 console.log('Information is: ', formInfo);
                 throw new Error('Empty values');
             }
-
+            const root = await handleCreateOnchainEvent();
+            const newData = { ...formInfo, root };
             const response = await fetch('/api/v1/T2', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formInfo),
+                body: JSON.stringify(newData),
             });
             const data = await response.json();
             if (data.error) {
@@ -88,7 +106,7 @@ export default function Create() {
             } else {
                 console.log('data: ', data);
                 setResult(data);
-                /*  router.push('/dashboard'); */
+
             }
         } catch (error: any) {
             console.error(error);
