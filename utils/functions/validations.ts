@@ -4,6 +4,10 @@ export const validateEmail = (email: any) => {
 }
 
 export const validateEther = (value: any) => {
-    const etherRegex = /^(0|[1-9]\d*)(\.\d+)?$/;
-    return etherRegex.test(value);
-}
+    try {
+        const etherRegex = /^(0|[1-9]\d*)(\.\d+)?$/;
+        return etherRegex.test(value);
+    } catch (error) {
+        return true;
+    }
+};

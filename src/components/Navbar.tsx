@@ -1,11 +1,11 @@
 "use client";
-import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import { Layout, Menu, theme } from 'antd';
-import logo from "public/img/OnchainEventsLogo.png";
-import { dafaultChainId, toHexString } from '../../utils/constants.tsx';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import logo from "public/img/OnchainEventsLogo.png";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { dafaultChainId, toHexString } from '@/utils/constants.tsx';
 
 const { Header } = Layout;
 
@@ -21,10 +21,6 @@ export default function Navbar() {
 
     // Request new network on change
     const changeNetwork = async (chainId: any) => {
-
-    }
-
-    const handlerClick = async () => {
 
     }
 

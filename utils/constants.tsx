@@ -1,5 +1,5 @@
-import type { CustomIconComponentProps } from '@ant-design/icons/lib/components/Icon';
 import Icon, { HomeOutlined } from '@ant-design/icons';
+import type { CustomIconComponentProps } from '@ant-design/icons/lib/components/Icon';
 
 export const dafaultChainId: any = 534353;
 

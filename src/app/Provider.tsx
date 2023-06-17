@@ -1,15 +1,15 @@
 "use client";
+import '@rainbow-me/rainbowkit/styles.css';
+
 import { SWRConfig } from 'swr';
 import { ConfigProvider } from 'antd';
 import dynamic from 'next/dynamic';
 import { WagmiConfig } from 'wagmi';
 import { PropsWithChildren } from 'react';
-import { Analytics } from '@vercel/analytics/react';
+import { chains } from '@/utils/functions/provider';
+import { wagmiClient } from '@/utils/functions/client';
+import { chainSelected } from '@/utils/functions/chain';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { wagmiClient } from '../../utils/functions/client';
-import { chainSelected } from '../../utils/functions/chain';
-import { chains } from '../../utils/functions/provider';
-import '@rainbow-me/rainbowkit/styles.css';
 
 type P = PropsWithChildren;
 
@@ -56,7 +56,6 @@ const myCustomThem: any = {
 
 function Providers({ children }: P) {
     const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 0 : 0;
-
 
     return (
         <div>

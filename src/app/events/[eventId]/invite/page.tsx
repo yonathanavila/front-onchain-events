@@ -1,9 +1,9 @@
 "use client";
 import useSWR from 'swr';
-import { usePathname } from 'next/navigation';
-import { Card, Col, Row, Typography, Input, Skeleton, Button, notification } from "antd";
-import { UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { UserOutlined } from '@ant-design/icons';
+import { Card, Col, Row, Typography, Input, Skeleton, Button, notification } from "antd";
 
 const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
 
@@ -41,7 +41,6 @@ export default function AttendEvent() {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log('Success:', data);
                     openNotification({
                         message: 'Success',
                         description: 'Your invitation has been sent.',
@@ -51,7 +50,6 @@ export default function AttendEvent() {
                     }
                 });
         } catch (error) {
-            console.log(error);
             setError(error);
         }
         setLoading(false);
@@ -60,10 +58,7 @@ export default function AttendEvent() {
     const openNotification = ({ message, description }: any) => {
         notification.open({
             message,
-            description,
-            onClick: () => {
-                console.log('Notification Clicked!');
-            },
+            description
         });
     };
 

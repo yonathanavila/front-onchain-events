@@ -1,6 +1,7 @@
+import { chains } from './provider';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet, trustWallet, walletConnectWallet } from '@rainbow-me/rainbowkit/wallets';
-import { chains } from './provider';
+
 
 export const connectors = connectorsForWallets([
 	{

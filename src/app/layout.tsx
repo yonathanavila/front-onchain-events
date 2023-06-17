@@ -1,9 +1,10 @@
 "use client";
 import './globals.css'
-import { Layout, theme } from 'antd';
-import styles from "@/styles/home.module.css";
-import Navbar from '@/components/Navbar';
 import Provider from './Provider';
+import { Layout, theme } from 'antd';
+import Navbar from '@/components/Navbar';
+import styles from "@/styles/home.module.css";
+
 const { Content, Footer } = Layout;
 
 export default function RootLayout({

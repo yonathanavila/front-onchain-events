@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import ABI from '../../../abi/OnchainEvents.json';
+import ABI from '@/abi/OnchainEvents.json';
 import { getMaxPriorityFeePerGas } from './getFee';
 
 const gasLimit = (process.env.NEXT_PUBLIC_GAS_LIMIT || 2864222) as Number;
@@ -11,9 +11,7 @@ export const AttendOnchainEvent = async (
     leaf: any
 ) => {
     try {
-        console.log('AttendOnchainEvent: ', leaf);
         const maxPriorityFeePerGas = await getMaxPriorityFeePerGas(provider);
-        console.log('maxPriorityFeePerGas: ', maxPriorityFeePerGas);
         const args: any = []
         args.push({
             gasLimit,
@@ -23,9 +21,8 @@ export const AttendOnchainEvent = async (
         const contract = new ethers.Contract(OnchainEvents, ABI, signer);
         const tx = await contract.attendEvent(leaf, ...args);
         const receipt = await tx.wait();
-        console.log(receipt);
 
-    } catch (error) {
-        console.log(error);
+    } catch (error: any) {
+        console.error('Failed to attend the event');
     }
 };

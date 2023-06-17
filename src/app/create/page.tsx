@@ -1,13 +1,14 @@
 "use client";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { useProvider, useSigner, useAccount } from 'wagmi';
 import { LockOutlined } from '@ant-design/icons';
-import { stepsList } from "../../../utils/constants.tsx";
+import { stepsList } from "@/utils/constants.tsx";
+import { useProvider, useSigner, useAccount } from 'wagmi';
+import { validAddress } from "@/utils/functions/validAddress.ts";
+import GenerateMerkleTree from "@/utils/functions/MerkleTree/index.tsx";
+import { validateEmail, validateEther } from "@/utils/functions/validations.ts";
 import { Card, Col, Row, Steps, Input, DatePicker, Button, Typography, Result } from "antd";
-import { validateEmail, validateEther } from "../../../utils/functions/validations.ts";
-import { RegisterOnchainEvent } from "../../../utils/functions/OnchainEvents/RegisterEvent.tsx";
-import GenerateMerkleTree from "../../../utils/functions/MerkleTree/index.tsx";
+import { RegisterOnchainEvent } from "@/utils/functions/OnchainEvents/RegisterEvent.tsx";
 
 const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 280 : 280;
 
@@ -17,25 +18,27 @@ export default function Create() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<any>();
     const router = useRouter();
-    const regex = /^\s*$/; // regular expression that matches empty strings or strings that only contain whitespace
+    const regexString = /^\s*$/; // regular expression that matches empty strings or strings that only contain whitespace
     const { data: signer } = useSigner(chainId);
     const provider = useProvider(chainId);
-    const { address, isConnecting, isDisconnected } = useAccount();
+    const { address } = useAccount();
 
-    const [formInfo, setFormInfo] = useState<any>({
+    const [formInfo, setFormInfo] = useState<EventInformationType>({
         event_name: "",
         event_date_start: "",
         event_date_end: "",
         event_location: "",
+        event_date: "",
         event_organizer: "",
+        event_address: "",
         event_organizer_email: "",
-        event_fee: "",
+        event_fee: 0,
         event_description: ""
     });
 
     const handleCreateOnchainEvent = async () => {
         try {
-            const { leaf, root } = GenerateMerkleTree(formInfo);
+            const { leaf, root } = await GenerateMerkleTree(formInfo);
             await RegisterOnchainEvent(provider, signer, leaf);
             return `0x${root}`;
         } catch (error: any) {
@@ -50,8 +53,9 @@ export default function Create() {
             event_date_end: "2021-08-03T00:00:00.000Z",
             event_location: "Barrio la cumbre",
             event_organizer: "Mike",
+            event_address: address!,
             event_organizer_email: "evenst@onchainevents.com",
-            event_fee: "0.1",
+            event_fee: 0.1,
             event_description: "This is a demo event"
         });
     }
@@ -69,7 +73,7 @@ export default function Create() {
 
         try {
 
-            //------- validate information
+            // validate form information
             if (!validateEmail(formInfo.event_organizer_email)) {
                 throw new Error("Invalid email");
             };
@@ -79,19 +83,20 @@ export default function Create() {
             }
 
             if (
-                regex.test(formInfo.event_name) ||
-                regex.test(formInfo.event_date_start) ||
-                regex.test(formInfo.event_date_end) ||
-                regex.test(formInfo.event_location) ||
-                regex.test(formInfo.event_organizer) ||
-                regex.test(formInfo.event_organizer_email) ||
-                regex.test(formInfo.event_fee) ||
-                regex.test(formInfo.event_description)
+                regexString.test(formInfo.event_name) ||
+                regexString.test(formInfo.event_date_start) ||
+                regexString.test(formInfo.event_date_end) ||
+                regexString.test(formInfo.event_location) ||
+                regexString.test(formInfo.event_organizer) ||
+                validAddress(formInfo.event_address) ||
+                regexString.test(formInfo.event_organizer_email) ||
+                regexString.test(formInfo.event_description)
             ) {
-                console.log('Information is: ', formInfo);
                 throw new Error('Empty values');
             }
+            // get the root of the tree
             const root = await handleCreateOnchainEvent();
+            // send data to the API
             const newData = { ...formInfo, root };
             const response = await fetch('/api/v1/T2', {
                 method: 'POST',
@@ -104,7 +109,6 @@ export default function Create() {
             if (data.error) {
                 setError(data.error);
             } else {
-                console.log('data: ', data);
                 setResult(data);
 
             }

@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 import { usePathname } from 'next/navigation';
 import { useProvider, useSigner, useAccount } from 'wagmi';
 import { LockOutlined, CopyOutlined } from '@ant-design/icons';
+import { AttendOnchainEvent } from '@/utils/functions/OnchainEvents/Attend';
 import { Card, Col, Row, Table, Typography, Button, Skeleton, notification, Modal, Input } from "antd";
-import { AttendOnchainEvent } from '../../../../../utils/functions/OnchainEvents/Attend';
 
 const baseURI = process.env.NEXT_PUBLIC_API || '/api/v1/T2';
 const chainId: any = process.env.NEXT_PUBLIC_MAINNET_TESTNET === "mainnet" ? 280 : 280;
@@ -47,7 +47,7 @@ export default function DetailEvent() {
         setIsModalOpen(false);
     };
 
-    const { address, isConnecting, isDisconnected } = useAccount()
+    const { address } = useAccount()
 
     const { Paragraph } = Typography;
 
@@ -63,7 +63,6 @@ export default function DetailEvent() {
                 userAddress: address,
                 leaf: `${apiCall[0]?.root}`
             };
-            console.log('newData: ', newData);
             const response = await fetch('/api/v1/T3', {
                 method: 'POST',
                 headers: {
@@ -75,7 +74,6 @@ export default function DetailEvent() {
             if (data.error) {
                 setError(data.error);
             } else {
-                console.log('data: ', data);
                 setResult(data);
                 /// send email attestation
                 const newData_ = {
@@ -94,7 +92,6 @@ export default function DetailEvent() {
                 if (data_.error) {
                     setError(data_.error);
                 } else {
-                    console.log('data: ', data_);
                     setResult(data_);
                     setIsModalOpen(false);
                     openNotification({
@@ -113,10 +110,7 @@ export default function DetailEvent() {
     const openNotification = ({ message, description }: any) => {
         notification.open({
             message,
-            description,
-            onClick: () => {
-                console.log('Notification Clicked!');
-            },
+            description
         });
     };
 

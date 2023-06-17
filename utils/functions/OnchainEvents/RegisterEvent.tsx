@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import ABI from '../../../abi/OnchainEvents.json';
+import ABI from '@/abi/OnchainEvents.json';
 import { getMaxPriorityFeePerGas } from './getFee';
 
 const gasLimit = (process.env.NEXT_PUBLIC_GAS_LIMIT || 1864222) as Number;
@@ -21,9 +21,8 @@ export const RegisterOnchainEvent = async (
         const contract = new ethers.Contract(OnchainEvents, ABI, signer);
         const tx = await contract.onchainAttestation(leaf, ...args);
         const receipt = await tx.wait();
-        console.log(receipt);
 
-    } catch (error) {
+    } catch (error: any) {
         console.log(error);
     }
 };
