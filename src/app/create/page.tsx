@@ -48,15 +48,15 @@ export default function Create() {
 
     const handlerFill = () => {
         setFormInfo({
-            event_name: "Onchain Events",
+            event_name: "El Grande de Grandes",
             event_date_start: "2021-08-03T00:00:00.000Z",
             event_date_end: "2021-08-03T00:00:00.000Z",
-            event_location: "Barrio la cumbre",
+            event_location: "La Esperanza e Intibucá",
             event_organizer: "Mike",
             event_address: address!,
             event_organizer_email: "evenst@onchainevents.com",
             event_fee: 0.1,
-            event_description: "This is a demo event"
+            event_description: "El Encuentro Nacional de Folklore EL GRANDE DE GRANDES "
         });
     }
 
